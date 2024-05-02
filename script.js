@@ -37,7 +37,7 @@ function setRandomTo(){
         }
     }
     else if(value1.value == "" || value2.value == "" ||tryy.value == ""){
-        result.innerText = "please enter any number"
+        massage(result,"please enter any number","red")
     }
 }
 
@@ -46,43 +46,46 @@ function startGame(){
     startContainer.innerHTML = gameContainer
     gameForm.addEventListener("submit",checker)
     let rahnama = document.getElementById("rahnama")
-    rahnama.innerHTML = `gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`
+    massage(rahnama,`gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`,)
 }
 
 function checker(){
     result = document.getElementById("result")
     const input = document.getElementById("userValue");
-   
+    
     if (input.value){
         if(counter == 0){
-            result.innerText = `wrong, computer number is ${rand}:(`
+            massage(result,`wrong, computer number is ${rand}:(`,"red")
             setTimeout(() => {
                 document.body.remove()
                  },4500)
         }
         else{
             if (input.value == rand){
-                
-                result.innerText = "succses"
+                massage(result,"succses","red")
                 setTimeout(() => {
                     document.body.remove()
                      },4500)
             }
             else if (input.value > rand){
                 counter--
-                result.innerText = `your number is large than computer, you have ${counter} try `
-                
+                // result.innerText = `your number is large than computer, you have ${counter} try `
+                massage(result,`your number is large than computer <br> you have ${counter} try `,"red")
             }
             else if (input.value < rand){
                 counter--
-                result.innerText = `your number is small than computer, you have ${counter} try `
+                massage(result,`your number is small than computer <br> you have ${counter} try `,"red")
             }
         }
     }
     else {
-        result.innerText = "please enter any number"
+        massage(result,"please enter any number","red")
     }
     rahnama.innerHTML = `gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`
+}
+function massage(varable,massage, color){
+    varable.innerHTML = massage
+    varable.style.color = color || "black"
 }
 function makeRandomNumber(e) {
   return Math.round(Math.random() * e);
