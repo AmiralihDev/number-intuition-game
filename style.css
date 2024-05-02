@@ -5,8 +5,8 @@ body {
 }
 
 #startContainer {
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 400px;
   background-color: aquamarine;
   display: flex;
   align-items: center;
