@@ -9,7 +9,7 @@ const value2 = document.getElementById("toValue")
 startForm.addEventListener("submit", setRandomTo);
 
 
-let gameContainer = `<p id="rahnama"></p></p><form action="#" method="get" id="gameForm">
+let gameContainer = `<p id="rahnama"></p><form action="#" method="get" id="gameForm">
 <div>
 <input type="number"id="userValue">
 </div>
@@ -62,14 +62,13 @@ function checker(){
         }
         else{
             if (input.value == rand){
-                massage(result,"succses","red")
+                massage(result,"succses","green")
                 setTimeout(() => {
                     document.body.remove()
                      },4500)
             }
             else if (input.value > rand){
                 counter--
-                // result.innerText = `your number is large than computer, you have ${counter} try `
                 massage(result,`your number is large than computer <br> you have ${counter} try `,"red")
             }
             else if (input.value < rand){
@@ -81,7 +80,7 @@ function checker(){
     else {
         massage(result,"please enter any number","red")
     }
-    rahnama.innerHTML = `gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`
+    massage(rahnama,`gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`)
 }
 function massage(varable,massage, color){
     varable.innerHTML = massage
