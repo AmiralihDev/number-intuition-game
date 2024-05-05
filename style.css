@@ -6,15 +6,27 @@ body {
 
 #startContainer {
   width: 350px;
-  height: 400px;
+  height: 550px;
   background-color: aquamarine;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 200px auto;
+  margin: 50px auto;
   border-radius: 12px;
   font-family: tahoma;
-  flex-direction: column;
+}
+#startContainer progress {
+  overflow: hidden;
+}
+#startContainer progress[value]::-webkit-progress-bar {
+  background-color: #000;
+}
+#startContainer progress[value]::-webkit-progress-value {
+  background-color: wheat;
+}
+#startContainer progress[value]::-moz-progress-bar {
+  background-color: white;
 }
 #startContainer button {
   border: none;

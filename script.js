@@ -6,6 +6,7 @@ let result = document.getElementById("result");
 const startForm = document.getElementById("startForm");
 const value1 = document.getElementById("1Value")
 const value2 = document.getElementById("toValue")
+let deadline = document.getElementById("deadline")
 startForm.addEventListener("submit", setRandomTo);
 
 
@@ -17,14 +18,18 @@ let gameContainer = `<p id="rahnama"></p><form action="#" method="get" id="gameF
 <button id="check">Check</button>
 
 </form>
+<p id="deadline"></p>
+<progress id="timeProgress" value="120" max="120"></progress>
+
 <p id="result"></p>`
+let time = 0
 let rand 
 let counter = 5
 function setRandomTo(){
     let random = makeRandomNumber(value2.value)
-    if(value1.value && value2.value && tryy.value){
+    if(value1.value && value2.value && tryy.value && deadline.value){
         counter = tryy.value
-
+        
         for (let i = 0; i < value2.value; i++) {
             if (random >= value1.value && random <= value2.value){
                 rand = random 
@@ -36,7 +41,7 @@ function setRandomTo(){
             }
         }
     }
-    else if(value1.value == "" || value2.value == "" ||tryy.value == ""){
+    else if(value1.value == "" || value2.value == "" ||tryy.value == ""|| deadline.value == ""){
         massage(result,"please enter any number","red")
     }
 }
@@ -47,20 +52,53 @@ function startGame(){
     gameForm.addEventListener("submit",checker)
     let rahnama = document.getElementById("rahnama")
     massage(rahnama,`gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`,)
+    startTimer()
 }
-
-function checker(){
+let timeOut = false
+function startTimer(){
+    time = deadline.value * 1000
+    let progress = document.getElementById("timeProgress")
+    progress.max = time
+    deadline = document.getElementById("deadline")
     result = document.getElementById("result")
-    const input = document.getElementById("userValue");
-    
-    if (input.value){
-        if(counter == 0){
-            massage(result,`wrong, computer number is ${rand}:(`,"red")
-            setTimeout(() => {
-                document.body.remove()
-                 },4500)
+    let deadlineTime = setInterval(() => {
+        time -= 1000
+        progress.value = time
+        massage(deadline, `time out in ${getTime()}`,"blue")
+        if (time == 0){
+            clearInterval(deadlineTime)
+            timeOut = true
+            if (timeOut){
+                progress.style.display = "none"
+                massage(deadline,"time Out :(","red")
+                massage(result, "dead :( Your time is up ","red")
+                dead()
+                setTimeout(() => {
+                    document.body.remove()
+                },4500) 
+            }
         }
-        else{
+    },1000)
+    
+}
+function getTime(){
+    let minute = Math.floor(time / 60_000).toString()
+    let second = Math.floor((time % 60_000) / 1000).toString()
+    return ` ${minute.padStart(2, "0")} : ${second.padStart(2, "0")}`
+}
+function dead(){
+    if(timeOut){
+        massage(result,`computer number is ${rand}:(`,"red")
+    }
+    massage(result,`wrong, computer number is ${rand}:(`,"red")
+}
+function checker(){
+    
+    const input = document.getElementById("userValue");
+    if (input.value){
+        
+        
+        if (counter > 0){
             if (input.value == rand){
                 massage(result,"succses","green")
                 setTimeout(() => {
@@ -76,12 +114,17 @@ function checker(){
                 massage(result,`your number is small than computer <br> you have ${counter} try `,"red")
             }
         }
+        else if(counter == 0 ){
+            dead()
+            setTimeout(() => {
+                document.body.remove()
+                 },4500)
     }
     else {
         massage(result,"please enter any number","red")
     }
     massage(rahnama,`gusses numbers between ${value1.value} and ${value2.value} <br> try : ${counter}`)
-}
+}}
 function massage(varable,massage, color){
     varable.innerHTML = massage
     varable.style.color = color || "black"
