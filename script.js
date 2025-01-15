@@ -10,7 +10,7 @@ let deadline = document.getElementById("deadline")
 startForm.addEventListener("submit", setRandomTo);
 
 
-let gameContainer = `<p id="rahnama"></p><form action="#" method="get" id="gameForm">
+let gameContainer = `<p id="rahnama"></p><form id="gameForm">
 <div>
 <input type="number"id="userValue">
 </div>
@@ -92,8 +92,8 @@ function dead(){
     }
     massage(result,`wrong, computer number is ${rand}:(`,"red")
 }
-function checker(){
-    
+function checker(e){
+    e.preventDefault()
     const input = document.getElementById("userValue");
     if (input.value){
         
